@@ -3,7 +3,7 @@ from .models import Members, Tran
 from django.contrib import messages
 # Create your views here.
 d=0
-s=' '
+s=''
 def Home(request):
     return render(request,"main.html")
 def Info(request):
@@ -14,17 +14,14 @@ def Transfer(request):
     a= request.POST['sender']
     dests= Members.objects.all()
     c= int(request.POST['send'])
-  
+    global d
+    global s
     for dest in dests:
         if a == dest.email:
-           
-            global d
+                    
             d=c
-            e=dest.credit
-            #request.session.get('s',dest.name)
-            global s
+            e=dest.credit         
             s=dest.name
-            
             break
     if c>e: 
         messages.info(request,"Entered Credits are Greater that Member Credits.Please enter credits correctly.")
