@@ -3,7 +3,7 @@ from .models import Members, Tran
 from django.contrib import messages
 # Create your views here.
 d=0
-s='NULL'
+s=' '
 def Home(request):
     return render(request,"main.html")
 def Info(request):
