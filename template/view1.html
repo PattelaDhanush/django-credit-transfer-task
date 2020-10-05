@@ -1,0 +1,165 @@
+{% load static %}
+{% static  "images" as baseUrl %}
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  body {
+    font-family: "Lato", sans-serif;
+    background-image: url("{{baseUrl}}/4.jpg");
+    height: 50vh;
+       background-size: cover;
+     background-position: center;
+     
+  }
+  
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: green;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+.topnav {
+  background-color: white;
+  overflow: hidden;
+}
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+th ,td{
+  padding: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="sidenav">
+  
+  <a class="active" href="Home"><i class="fa fa-home"><b>Home</b></i></a>
+  
+  <button class="dropdown-btn">View Info 
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-container">
+    <a href="Info">View Details</a>
+     
+  </div>
+    
+  <button class="dropdown-btn">Transfer 
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-container">
+    <a href="TranInfo">To an Existing Member</a>
+    
+  </div>
+  
+    
+  </div>
+<!--we need Display table from data base Here.-->
+<center><h1> WELCOME TO CREDIT TRANSFER PORTAL</h1></center>
+<center> Select Member to send credits.</center><br>
+<center>
+  <form action="Transfer1" method="POST">
+    {% csrf_token %}
+	<table border="1px" style="border-collapse: collapse">
+      <tr>
+        <th scope="col">User ID</th>
+        <th scope="col">Tick for transfer</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Credits</th>
+      </tr>
+    {% for dest in dests %}
+						
+						<!-- Destination -->
+            {% if dest.email != a %}
+              <tr><td>{{dest.id}}</td>
+              <td><center><input type="radio" name="getter" value={{dest.email}}></center></td>
+              <td>{{dest.name}}</td>
+              <td>{{dest.email}}</td>
+              <td>{{dest.credit}}</td></tr>
+           {% endif %}
+						{% endfor %}
+
+              
+  </table>
+  <br><input type="submit" value="Transfer">
+</form>
+</center>
+
+
+<script>
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
+}
+</script>
+
+</body>
+</html> 
