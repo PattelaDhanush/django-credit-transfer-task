@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Members, Tran
 from django.contrib import messages
 # Create your views here.
-
+d='NULL'
+s='NULL'
 def Home(request):
     return render(request,"main.html")
 def Info(request):
